@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AtletaDrop — Achadinhos fit direto no seu WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine: #0B231D;
+    --pine-2: #123A30;
+    --sand: #FFF8EE;
+    --card: #FFFFFF;
+    --ink: #142621;
+    --muted: #6E7C77;
+    --coral: #FF5A36;
+    --coral-dark: #E1471F;
+    --green: #2F9E58;
+    --green-soft: #E6F5EB;
+    --line: #E8E2D6;
+    --shadow: 0 18px 40px -18px rgba(11,35,29,0.35);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: linear-gradient(180deg, #b3b3b3 0%, rgb(248, 246, 248) 40%, #d8d8d8 100%);
+    font-family:'Inter', sans-serif;
+    color: var(--ink);
+    display:flex;
+    justify-content:center;
+    padding: 32px 16px 100px;
+    min-height:100vh;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  .phone{
+    width:100%;
+    max-width: 420px;
+    background: var(--sand);
+    border-radius: 28px;
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    position:relative;
+    padding-bottom: 78px; /* espaço pra barra fixa do rodapé não cobrir conteúdo */
+  }
+
+  /* ---------- BARRA DE TOPO (benefícios) ---------- */
+  .top-bar{
+    background: #DFF3E6;
+    color: var(--pine-2);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 9px 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap: wrap;
+    text-align:center;
+    border-bottom: 1px solid #CDEAD9;
+  }
+  .top-bar span{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    white-space:nowrap;
+  }
+
+  /* ---------- BARRA FIXA DE RODAPÉ ---------- */
+  .sticky-cta{
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    z-index: 50;
+    box-shadow: 0 -12px 24px -14px rgba(11,35,29,0.25);
+  }
+  .sticky-cta a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding: 13px;
+    border-radius: 12px;
+    background: linear-gradient(180deg,#37C568,#2F9E58);
+    color:#fff;
+    font-weight:800;
+    font-size:14.5px;
+    text-decoration:none;
+    box-shadow: 0 12px 20px -10px rgba(47,158,88,0.55);
+  }
+  .sticky-cta a .vagas-mini{
+    font-size:11px;
+    font-weight:700;
+    background: rgba(255,255,255,0.22);
+    padding: 3px 8px;
+    border-radius: 99px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(120% 140% at 50% -10%, #0ab14a 0%, var(--pine) 80%),
+      var(--pine);
+    padding: 34px 24px 46px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    bottom:-30px; left:0; right:0;
+    height:60px;
+    background: var(--sand);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .badge-live{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18);
+    color:#CFE8DB;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.02em;
+    padding: 6px 14px;
+    border-radius: 99px;
+    margin-bottom:18px;
+  }
+  .badge-live .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:#5CE28B;
+    box-shadow: 0 0 0 0 rgba(92,226,139,0.6);
+    animation: pulse-dot 1.8s infinite;
+  }
+  @keyframes pulse-dot{
+    0%{ box-shadow:0 0 0 0 rgba(92,226,139,0.55); }
+    70%{ box-shadow:0 0 0 8px rgba(92,226,139,0); }
+    100%{ box-shadow:0 0 0 0 rgba(92,226,139,0); }
+  }
+
+  .logo-ring{
+    width:76px; height:76px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background: url('photo.png');
+    background-size: cover;
+    background-position:center;
+    background-color:#2F9E58; /* aparece se logo.jpg ainda não existir na pasta */
+    box-shadow: 0 10px 24px -8px rgba(92,226,139,0.5);
+    overflow:hidden;
+  }
+  /* A imagem do perfil vem do arquivo "logo.jpg".
+     Basta colocar um arquivo com esse nome na mesma pasta deste HTML
+     (mesmo formato .jpg; se for .png, troque a extensão na linha do background acima). */
+
+  .hero h1{
+    font-family:'Archivo Black', sans-serif;
+    color:#fff;
+    font-size: 30px;
+    line-height:1.08;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .hero p{
+    color:#B9CFC5;
+    font-size:14.5px;
+    line-height:1.5;
+    margin:0 auto;
+    max-width: 300px;
+  }
+
+  /* ---------- BODY ---------- */
+  .body-inner{
+    padding: 4px 22px 26px;
+    position:relative;
+    z-index:2;
+  }
+
+  .vagas-box{
+    background: var(--card);
+    border-radius:16px;
+    padding:16px 18px 18px;
+    box-shadow: var(--shadow);
+    margin-top: 6px;
+  }
+  .vagas-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:10px;
+  }
+  .vagas-top strong{
+    font-size:14px;
+  }
+  .vagas-top span{
+    font-family:'Archivo Black', sans-serif;
+    color: var(--coral);
+    font-size:14px;
+  }
+  .track{
+    height:9px;
+    border-radius:99px;
+    background: var(--line);
+    overflow:hidden;
+  }
+  .fill{
+    height:100%;
+    width:82%;
+    border-radius:99px;
+    background: linear-gradient(90deg, var(--coral), #FF8A3D);
+    transition: width 1.1s cubic-bezier(.4,0,.2,1);
+  }
+  .vagas-foot{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color: var(--muted);
+    margin-top:8px;
+  }
+
+  .cta{
+    display:block;
+    width:100%;
+    margin-top:16px;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background: linear-gradient(180deg,#37C568,#2F9E58);
+    color:#fff;
+    font-weight:800;
+    font-size:16px;
+    text-align:center;
+    text-decoration:none;
+    box-shadow: 0 14px 26px -12px rgba(47,158,88,0.55);
+    cursor:pointer;
+    position:relative;
+    transition: transform .15s ease;
+  }
+  .cta:active{ transform: scale(0.98); }
+  .cta small{
+    display:block;
+    font-weight:600;
+    font-size:11.5px;
+    opacity:.85;
+    margin-top:3px;
+  }
+
+  /* member list */
+  .members{
+    margin-top:14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .member-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background: var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:9px 12px;
+    font-size:12.8px;
+  }
+  .member-row .check{
+    width:20px; height:20px;
+    border-radius:50%;
+    background: var(--green-soft);
+    color: var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px;
+    flex-shrink:0;
+  }
+  .member-row b{ font-weight:700; }
+  .member-row .when{
+    margin-left:auto;
+    color: var(--muted);
+    font-size:11px;
+    white-space:nowrap;
+  }
+
+  /* quote */
+  .quote{
+    margin-top:18px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--coral);
+    background: #fff;
+    border-radius: 0 12px 12px 0;
+    font-size: 13px;
+    line-height:1.55;
+    font-style: italic;
+    color:#39473F;
+  }
+  .quote cite{
+    display:block;
+    margin-top:8px;
+    font-style:normal;
+    font-weight:700;
+    font-size:12px;
+    color: var(--pine-2);
+  }
+
+  /* feature grid */
+  .features{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+  }
+  .feature{
+    padding:14px;
+    border-radius:14px;
+  }
+  .feature.f1{ background: linear-gradient(160deg,#FFE7DE,#FFF3EC); }
+  .feature.f2{ background: linear-gradient(160deg,#E6F5EB,#F2FBF5); }
+  .feature.f3{ background: linear-gradient(160deg,#F2FBF5,#E6F5EB); }
+  .feature.f4{ background: linear-gradient(160deg,#FFF3EC,#FFE7DE); }
+  .feature .ico{ font-size:18px; margin-bottom:6px; display:block; }
+  .feature h4{ margin:0 0 3px; font-size:13px; }
+  .feature p{ margin:0; font-size:11.5px; color:var(--muted); line-height:1.4; }
+
+  /* deals */
+  .deals-head{
+    margin-top:26px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  .deals-head h3{
+    font-family:'Archivo Black', sans-serif;
+    font-size:16px;
+    margin:0;
+  }
+  .deals-head span{
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  .deals-scroll{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+    overflow-x:auto;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .deals-scroll::-webkit-scrollbar{ display:none; }
+
+  .deal-ticket{
+    flex: 0 0 132px;
+    background:#fff;
+    border-radius:14px;
+    padding:12px 10px 10px;
+    text-align:center;
+    position:relative;
+    border:1px solid var(--line);
+  }
+  .deal-ticket::before,.deal-ticket::after{
+    content:"";
+    position:absolute;
+    width:12px; height:12px;
+    background: var(--sand);
+    border-radius:50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .deal-ticket::before{ left:-6px; }
+  .deal-ticket::after{ right:-6px; }
+  .deal-store{
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .deal-off{
+    font-family:'Archivo Black', sans-serif;
+    color: var(--coral-dark);
+    font-size:20px;
+    margin: 4px 0 2px;
+  }
+  .deal-name{ font-size:11px; color:var(--ink); }
+
+  .foot-note{
+    margin-top:22px;
+    text-align:center;
+    font-size:11px;
+    color: var(--muted);
+    line-height:1.6;
+  }
+
+  /* toast notification */
+  .toast{
+    position:absolute;
+    left:16px;
+    bottom:96px;
+    background:#fff;
+    border-radius:12px;
+    padding:10px 14px 10px 10px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    box-shadow: 0 12px 28px -10px rgba(11,35,29,0.4);
+    font-size:12.3px;
+    z-index:10;
+    transform: translateY(120%);
+    opacity:0;
+    transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+    max-width: calc(100% - 32px);
+  }
+  .toast.show{
+    transform: translateY(0);
+    opacity:1;
+  }
+  .toast .avatar{
+    width:30px; height:30px;
+    border-radius:50%;
+    background: linear-gradient(145deg,#5CE28B,#2F9E58);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800;
+    font-size:12px;
+    color:#0B231D;
+    flex-shrink:0;
+  }
+  .toast .txt b{ display:block; font-size:12.5px; }
+  .toast .txt span{ color:var(--muted); font-size:10.8px; }
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+
+  <div class="top-bar">
+    <span>🆓 100% gratuito</span>
+    <span>🚫 sem mensalidade</span>
+    <span>🔓 saia quando quiser</span>
+  </div>
+
+  <div class="hero">
+    <div class="badge-live"><span class="dot"></span>39 pessoas vendo agora</div>
+    <div class="logo-ring"></div>
+    <h1>Atleta Drop</h1>
+    <p>Achadinhos fit verificados do Mercado Livre e da Shopee, direto no seu WhatsApp — todo dia.</p>
+  </div>
+
+  <div class="body-inner">
+
+    <div class="vagas-box">
+      <div class="vagas-top">
+        <strong>Vagas para hoje</strong>
+        <span id="vagasNum">6 restantes</span>
+      </div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="vagas-foot">
+        <span>Turma de hoje quase cheia</span>
+        <span id="vagasTotal">44/50</span>
+      </div>
+    </div>
+
+    <a class="cta" href="https://chat.whatsapp.com/LghZjk3CjmXB1LyB8qsAE0" target="_blank" rel="noopener">
+      Entrar no grupo agora
+      <small>Grátis · sem spam · saia quando quiser</small>
+    </a>
+
+    <div class="members" id="members"></div>
+
+    <div class="quote">
+      "Comprei um mini fit por R$29,90 com uma promoção que vi no grupo. Já economizei mais de R$300 esse mês."
+      <cite>— Roberta S., integrante desde março</cite>
+    </div>
+
+    <div class="features">
+      <div class="feature f1"><span class="ico">🏷️</span><h4>Cupons de até 70%</h4><p>Descontos reais, testados antes de postar.</p></div>
+      <div class="feature f2"><span class="ico">🔒</span><h4>Ofertas verificadas</h4><p>Sem link quebrado e sem golpe.</p></div>
+      <div class="feature f3"><span class="ico">⏱️</span><h4>Tempo limitado</h4><p>Cupons somem em poucas horas.</p></div>
+      <div class="feature f4"><span class="ico">💪</span><h4>Foco 100% fit</h4><p>Suplementos, roupas e acessórios de treino.</p></div>
+    </div>
+
+    <div class="deals-head">
+      <h3>Ofertas recentes</h3>
+      <span>Mercado Livre e Shopee</span>
+    </div>
+    <div class="deals-scroll">
+      <div class="deal-ticket"><div class="deal-store">Mercado Livre</div><div class="deal-off">70% off</div><div class="deal-name">Faixa elástica</div></div>
+      <div class="deal-ticket"><div class="deal-store">Shopee</div><div class="deal-off">60% off</div><div class="deal-name">Coqueteleira</div></div>
+      <div class="deal-ticket"><div class="deal-store">Mercado Livre</div><div class="deal-off">55% off</div><div class="deal-name">Whey 900g</div></div>
+      <div class="deal-ticket"><div class="deal-store">Shopee</div><div class="deal-off">65% off</div><div class="deal-name">Top fitness</div></div>
+      <div class="deal-ticket"><div class="deal-store">Mercado Livre</div><div class="deal-off">48% off</div><div class="deal-name">Tênis de corrida</div></div>
+    </div>
+
+    <p class="foot-note">AtletaDrop é um grupo independente de curadoria de ofertas.<br>Não somos afiliados ao Mercado Livre ou à Shopee.</p>
+
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="avatar" id="toastAvatar">M</div>
+    <div class="txt"><b id="toastName">Maria</b><span id="toastText">entrou no grupo agora</span></div>
+  </div>
+
+</div>
+
+<div class="sticky-cta">
+  <a href="https://chat.whatsapp.com/LghZjk3CjmXB1LyB8qsAE0" target="_blank" rel="noopener">
+    Entrar no grupo agora
+    <span class="vagas-mini" id="stickyVagas">6 vagas</span>
+  </a>
+</div>
+
+<script>
+  // ---------- Vagas restantes: barra "esgotando" ----------
+  (function(){
+    const total = 50;
+    let taken = 44;
+    const fill = document.getElementById('fill');
+    const num = document.getElementById('vagasNum');
+    const totalEl = document.getElementById('vagasTotal');
+    const stickyVagas = document.getElementById('stickyVagas');
+
+    function render(){
+      const pct = Math.min(100, Math.round((taken/total)*100));
+      fill.style.width = pct + '%';
+      const left = Math.max(1, total - taken);
+      num.textContent = left + (left === 1 ? ' vaga restante' : ' restantes');
+      totalEl.textContent = taken + '/' + total;
+      stickyVagas.textContent = left + (left === 1 ? ' vaga' : ' vagas');
+    }
+    render();
+
+    // a cada tanto tempo, "consome" mais uma vaga (nunca zera de vez, só se aproxima)
+    setInterval(function(){
+      if (taken < total - 1){
+        taken += 1;
+        render();
+      }
+    }, 9000);
+  })();
+
+  // ---------- Notificações rotativas de entrada no grupo ----------
+  (function(){
+    const names = [
+      "Maria Souza","Clarice Andrade","Fernanda Lima","Juliana Torres",
+      "Camila Rocha","Beatriz Nunes","Larissa Prado","Amanda Ribeiro",
+      "Patrícia Gomes","Vanessa Melo"
+    ];
+    const actions = [
+      "entrou no grupo agora",
+      "acabou de entrar",
+      "garantiu a vaga agora"
+    ];
+    const toast = document.getElementById('toast');
+    const avatar = document.getElementById('toastAvatar');
+    const nameEl = document.getElementById('toastName');
+    const textEl = document.getElementById('toastText');
+
+    function initials(full){
+      const parts = full.split(' ');
+      return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+    }
+
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function cycle(){
+      const name = pick(names);
+      nameEl.textContent = name;
+      textEl.textContent = pick(actions);
+      avatar.textContent = initials(name);
+
+      toast.classList.add('show');
+      setTimeout(function(){
+        toast.classList.remove('show');
+      }, 3600);
+    }
+
+    setTimeout(cycle, 1400);
+    setInterval(cycle, 6500);
+  })();
+
+  // ---------- Lista de membros: destaca em rotação leve ----------
+  (function(){
+    const list = [
+      ["Gustavo Pinto", "entrou no grupo agora"],
+      ["João Pedro", "entrou no grupo agora"],
+      ["Luiza Ferreira", "entrou no grupo agora"]
+    ];
+    const wrap = document.getElementById('members');
+    wrap.innerHTML = list.map(function(m){
+      return '<div class="member-row"><span class="check">✓</span><b>'+m[0]+'</b><span>'+m[1]+'</span><span class="when">agora</span></div>';
+    }).join('');
+  })();
+</script>
+
+</body>
+</html>
